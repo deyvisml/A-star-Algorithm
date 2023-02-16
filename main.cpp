@@ -1,22 +1,14 @@
-#include "stdafx.h"
-
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
-#include <iostream>
-#include <stdio.h>
-#include <windows.h>
-#include <string>
+#include <bits/stdc++.h>
+using namespace std;
 
 #include "Graph.h"
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
 	//Graph Creation
 	Graph* pRomania = new Graph();
 	
-	pRomania->addNode("Arad", 366);
+	pRomania->addNode("Arad", 366); // TODO: Nombre y Heuristica
 	pRomania->addNode("Bucharest", 0);
 	pRomania->addNode("Craiova", 160);
 	pRomania->addNode("Dobreta", 242);
@@ -36,6 +28,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	pRomania->addNode("Urziceni", 80);
 	pRomania->addNode("Vaslui", 199);
 	pRomania->addNode("Zerind", 374);
+
 
 	pRomania->connect("Arad","Zerind", 75);	
 	pRomania->connect("Arad","Timisoara", 118);
@@ -76,35 +69,32 @@ int _tmain(int argc, _TCHAR* argv[])
 	pRomania->connect("Neamt","Urziceni",315);
 	//Graph Creation End*/
 
-	{ //Added extra scope because the string 'start' is created here but not released until after
-	  //the leak dump, so it claims a leak when there isn't one.
-		std::cout << "Enter start position, 'quit' to exit or 'list' to show positions: ";
-		std::string start;
-		std::cin >> start;
 
-		while(start != "quit")
-		{
-			if(start == "list")
-			{
-				pRomania->listNodes();
-			}
-			else
-			{
-				std::cout << "\r\nBest Path from " << start << " to Bucharest\r\n------------------\r\n";
+    string start;
+    cout << "Ingrese la posicion inicial, 'quit' para salir o 'list' para listar: ";
+    cin >> start;
 
-				if(!pRomania->findPath(start, "Bucharest"))
-					std::cout << "Could not find a path\r\n\r\n";
+    while(start != "quit")
+    {
+        if(start == "list")
+        {
+            pRomania->listNodes();
+        }
+        else
+        {
+            cout << "\r\nLa mejor ruta de " << start << " a Bucharest\r\n------------------\r\n";
 
-				pRomania->reset();
-			}
+            if(!pRomania->findPath(start, "Bucharest"))
+                cout << "No se encontro una ruta\r\n\r\n";
 
-			std::cout << "Enter start position, 'quit' to exit or 'list' to show positions: ";
-			std::cin >> start;
-		}
-	
-		delete pRomania;
-	} //end extra scope
-	_CrtDumpMemoryLeaks();
+            pRomania->reset();
+        }
+
+        cout << "Ingrese la posicion inicial, 'quit' para salir o 'list' para listar: ";
+        cin >> start;
+    }
+
+    delete pRomania;
 
 	return 0;
 }
