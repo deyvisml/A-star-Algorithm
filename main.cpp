@@ -8,71 +8,61 @@ int main()
 	//Graph Creation
 	Graph* pRomania = new Graph();
 	
-	pRomania->addNode("Arad", 366); // TODO: Nombre y Heuristica
-	pRomania->addNode("Bucharest", 0);
-	pRomania->addNode("Craiova", 160);
-	pRomania->addNode("Dobreta", 242);
-	pRomania->addNode("Eforie", 161);
-	pRomania->addNode("Fagaras", 178);
-	pRomania->addNode("Giurgiu", 77);
-	pRomania->addNode("Hirsova", 151);
-	pRomania->addNode("Iasi", 226);
-	pRomania->addNode("Lugoj", 244);
-	pRomania->addNode("Mehadia", 241);
-	pRomania->addNode("Neamt", 234);
-	pRomania->addNode("Oradea", 380);
-	pRomania->addNode("Pitesti", 98);
-	pRomania->addNode("RimnicuVilcea", 193);
-	pRomania->addNode("Sibiu", 253);
-	pRomania->addNode("Timisoara", 329);
-	pRomania->addNode("Urziceni", 80);
-	pRomania->addNode("Vaslui", 199);
-	pRomania->addNode("Zerind", 374);
+	// TODO: Nombre y posición
+	pRomania->addNode("Arad", 130, 185);
+	pRomania->addNode("Timisoara", 133, 290);
+	pRomania->addNode("Sibiu", 279, 228);
+	pRomania->addNode("Zerind", 151, 133);
+	pRomania->addNode("Lugoj", 224, 330);
+	pRomania->addNode("RimnicuVilcea", 311, 290);
+	pRomania->addNode("Fagaras", 406, 239);
+	pRomania->addNode("Oradea", 180, 82);
+	pRomania->addNode("Mehadia", 228, 381);
+	pRomania->addNode("Craiova", 337, 446);
+	pRomania->addNode("Pitesti", 423, 344);
+	pRomania->addNode("Bucarest", 527, 395);
+	pRomania->addNode("Dobreta", 224, 432);
+	pRomania->addNode("Giurgiu", 493, 468);
+	pRomania->addNode("Urziceni", 599, 367);
+	pRomania->addNode("Hirsova", 697, 366);
+	pRomania->addNode("Vaslui", 666, 245);
+	pRomania->addNode("Eforie", 734, 439);
+	pRomania->addNode("Iasi", 621, 166);
+	pRomania->addNode("Neamt", 533, 126);
 
 
-	pRomania->connect("Arad","Zerind", 75);	
-	pRomania->connect("Arad","Timisoara", 118);
-	pRomania->connect("Arad","Sibiu", 140);
-
-	pRomania->connect("Oradea","Zerind", 71);
-	pRomania->connect("Oradea","Sibiu", 151);
-
-	pRomania->connect("Timisoara","Lugoj", 111);
-	pRomania->connect("Lugoj","Mehadia", 70);
-	pRomania->connect("Mehadia","Dobreta", 75);
-
-	pRomania->connect("Dobreta","Craiova", 120);	
-	pRomania->connect("Craiova","Pitesti", 138);
-	pRomania->connect("Craiova","RimnicuVilcea", 146);
-	pRomania->connect("Pitesti","RimnicuVilcea", 97);
-	pRomania->connect("Sibiu","RimnicuVilcea", 80);
-
-	pRomania->connect("Sibiu","Fagaras", 99);
-	pRomania->connect("Pitesti","Bucharest", 101);
-	pRomania->connect("Fagaras","Bucharest", 211);
-
-	pRomania->connect("Bucharest","Giurgiu", 90);
-	pRomania->connect("Bucharest","Urziceni", 85);
-
-	pRomania->connect("Eforie","Hirsova",90);
-	pRomania->connect("Eforie","Bucharest",208);
-	pRomania->connect("Eforie","Giurgiu",216);
-
-	pRomania->connect("Hirsova","Vaslui",217);
-	pRomania->connect("Hirsova","Fagaras",265);
-	pRomania->connect("Hirsova","Bucharest",149);
-
-	pRomania->connect("Iasi","Vaslui",58);
-	pRomania->connect("Iasi","Neamt",85);
-
-	pRomania->connect("Neamt","Vaslui",105);
-	pRomania->connect("Neamt","Urziceni",315);
+	pRomania->connect("Arad", "Timisoara");
+	pRomania->connect("Arad", "Sibiu");
+	pRomania->connect("Arad", "Zerind");
+	pRomania->connect("Timisoara", "Lugoj");
+	pRomania->connect("Sibiu", "RimnicuVilcea");
+	pRomania->connect("Sibiu", "Fagaras");
+	pRomania->connect("Sibiu", "Oradea");
+	pRomania->connect("Zerind", "Oradea");
+	pRomania->connect("Lugoj", "Mehadia");
+	pRomania->connect("RimnicuVilcea", "Craiova");
+	pRomania->connect("RimnicuVilcea", "Pitesti");
+	pRomania->connect("Fagaras", "Bucarest");
+	pRomania->connect("Mehadia", "Dobreta");
+	pRomania->connect("Craiova", "Pitesti");
+	pRomania->connect("Craiova", "Dobreta");
+	pRomania->connect("Pitesti", "Bucarest");
+	pRomania->connect("Bucarest", "Giurgiu");
+	pRomania->connect("Bucarest", "Urziceni");
+	pRomania->connect("Urziceni", "Hirsova");
+	pRomania->connect("Urziceni", "Vaslui");
+	pRomania->connect("Hirsova", "Eforie");
+	pRomania->connect("Vaslui", "Iasi");
+	pRomania->connect("Iasi", "Neamt");
 	//Graph Creation End*/
 
 
-    string start;
-    cout << "Ingrese la posicion inicial, 'quit' para salir o 'list' para listar: ";
+    string start, end;
+    cout << "Ingrese la ciudad origen y destino: \n";
+	cout <<"-> Origen: ";
     cin >> start;
+	cout << "-> Destino: ";
+    cin >> end;
 
     while(start != "quit")
     {
@@ -82,16 +72,19 @@ int main()
         }
         else
         {
-            cout << "\r\nLa mejor ruta de " << start << " a Bucharest\r\n------------------\r\n";
+            cout << "\r\nLa mejor ruta de " << start << " a "<<end<<"\r\n------------------\r\n";
 
-            if(!pRomania->findPath(start, "Bucharest"))
+            if(!pRomania->findPath(start, end))
                 cout << "No se encontro una ruta\r\n\r\n";
 
             pRomania->reset();
         }
 
-        cout << "Ingrese la posicion inicial, 'quit' para salir o 'list' para listar: ";
-        cin >> start;
+        cout << "Ingrese la ciudad origen y destino: \n";
+		cout <<"-> Origen: ";
+		cin >> start;
+		cout << "-> Destino: ";
+		cin >> end;
     }
 
     delete pRomania;

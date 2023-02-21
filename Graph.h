@@ -15,11 +15,13 @@ public:
 	Graph(void);
 	~Graph(void);
 
-	void addNode(string name, int heuristic);
-	void connect(string left, string right, int moveCost);
+	void addNode(string name, int x, int y);
+	void connect(string left, string right);
 	void listNodes(void);
 	bool findPath(string start, string end);
 	bool findPath(Node* pStart, Node* pEnd);
+	int calculate_move_cost(Node* pFirst, Node* pSecond);
+	int calculate_heuristic(Node* pCurrent, Node* pEnd);
 	void reset(void);
 };
 
@@ -39,12 +41,12 @@ Graph::~Graph(void)
 	}
 }
 
-void Graph::addNode(string name, int heuristic)
+void Graph::addNode(string name, int x, int y)
 {
-	mNodes.push_back(new Node(name,heuristic));
+	mNodes.push_back(new Node(name, x, y));
 }
 
-void Graph::connect(string first, string second, int moveCost)
+void Graph::connect(string first, string second)
 {
 	Node* pFirst = NULL;
 	Node* pSecond = NULL;
@@ -52,9 +54,17 @@ void Graph::connect(string first, string second, int moveCost)
 	findNodes(first, &pFirst, second, &pSecond);
 	if(pFirst != NULL && pSecond != NULL)
 	{
+		int moveCost = calculate_move_cost(pFirst, pSecond); // TODO: Calculando la distancia o "coste" entre ambos nodos
 		pFirst->createEdge(pSecond, moveCost);
 		pSecond->createEdge(pFirst, moveCost);
 	}
+}
+
+int Graph::calculate_move_cost(Node* pFirst, Node* pSecond)
+{
+	Coordenada c1 = pFirst->get_coordenada();
+	Coordenada c2 = pSecond->get_coordenada();
+	return sqrt(pow(c1.x - c2.x, 2) + pow(c1.y - c2.y, 2));
 }
 
 void Graph::findNodes(string firstName, Node** ppFirstNode, string secondName, Node** ppSecondNode)
@@ -130,7 +140,10 @@ bool Graph::findPath(Node* pStart, Node* pEnd)
 
 		//Exit if we're are the goal
 		if(pCurrNode == pEnd) // TODO: EN UNA PRIMERA VUELTA ESTO NUNCA SE CUMPLE POR EL IF DEL INICIO
+		{
+			cout << "Coste total: "<<pCurrNode->getGCost()<<endl;
 			break;
+		}
 
 		//Remove the node from the open list and place it in the closed
 		openList.erase(openList.begin());
@@ -149,6 +162,7 @@ bool Graph::findPath(Node* pStart, Node* pEnd)
 				{
 					openList.push_back(pEdgeNode);
 					pEdgeNode->setGCost(pCurrNode->getGCost()+(*i)->moveCost);
+					pEdgeNode->setHCost(calculate_heuristic(pEdgeNode, pEnd)); // TODO: Calculando y estableciendo la heuristica
 					pEdgeNode->calcFCost();
 					pEdgeNode->setParent(pCurrNode);
 
@@ -199,6 +213,10 @@ bool Graph::findPath(Node* pStart, Node* pEnd)
 	return false;
 }
 
+int Graph::calculate_heuristic(Node* pCurrent, Node* pEnd)
+{
+	return calculate_move_cost(pCurrent, pEnd);
+}
 
 bool Graph::inList(Node* pNode, vector<Node*>* pList)
 {
